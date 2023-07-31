@@ -72,20 +72,34 @@ spells = []
 sel = 0
 
 
+def render_card(x, y, sellected, card=""):
+    screen.blit(box, (42*x+2, 42*y+2))
+    if sellected:
+        screen.blit(highlight, (42*x+2, y+2))
+    if card == "":
+        return
+    screen.blit(spell_info[card][2], (42*x+2+4, 42*y+2+4))
+
+
 def render():
     x = 0
     y = 2
     for i in range(26):
-        screen.blit(box, (42*i+2, 2))
-    screen.blit(highlight, (42*sel+2, 2))
-    for k, spell_v in enumerate(spells):
-        screen.blit(spell_info[name_to_id(spell_v)][2], (42*k+2+4, 2+4))
+        # screen.blit(box, (42*i+2, 2))
+        # screen.blit(highlight, (42*sel+2, 2))
+        try:
+            render_card(i, 0, sel == i, name_to_id(spells[i]))
+        except:
+            render_card(i, 0, sel == i)
+        # for k, spell_v in enumerate(spells):
+            # screen.blit(spell_info[name_to_id(spell_v)][2], (42*k+2+4, 2+4))
 
     screen.blit(textinput.surface, (2, 40))
     for k, spell_v in enumerate(spell_info):
         if textinput.value.lower() in spell_v[0].lower():
-            screen.blit(box, (x*42+2, y*42+2))
-            screen.blit(spell_info[k][2], (x*42+2+4, y*42+2+4))
+            render_card(x, y, False, k)
+            # screen.blit(box, (x*42+2, y*42+2))
+            # screen.blit(spell_info[k][2], (x*42+2+4, y*42+2+4))
             x += 1
             if x >= 26:
                 y += 1
@@ -109,12 +123,15 @@ while running:
                 pos = pygame.mouse.get_pos()
                 pos = ((pos[0]-2)//42, pos[1]//42)  # 2 is spell gui, 1
                 if pos[1] >= 2:
-                    spell = list(filter(lambda spell: textinput.value.lower(
-                    ) in spell[0].lower(), spell_info))[(pos[1]-2)*26+pos[0]]
-                    # print(spell[3])
-                    if len(spells) < 26:
-                        spells.insert(sel, spell[3])
-                        sel += 1
+                    try:
+                        spell = list(filter(lambda spell: textinput.value.lower(
+                        ) in spell[0].lower(), spell_info))[(pos[1]-2)*26+pos[0]]
+                        # print(spell[3])
+                        if len(spells) < 26:
+                            spells.insert(sel, spell[3])
+                            sel += 1
+                    except IndexError:
+                        pass
                 elif pos[1] == 0:
                     try:
                         spells.pop(pos[0])
