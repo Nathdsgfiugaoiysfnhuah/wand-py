@@ -1,12 +1,12 @@
 import pygame
 import random
 import os
-import types
-import map
+import d_types
+import d_map
 import time
 
 WIDTH = 32*26
-HEIGHT = 1080/2
+HEIGHT = 1080//2
 FPS = 60
 
 # Define Colors 
@@ -23,9 +23,9 @@ pygame.display.set_caption("Wand Editor")
 clock = pygame.time.Clock()     ## For syncing the FPS
 box = pygame.transform.scale(pygame.image.load("ui/inventory_box.png").convert_alpha(),(32,32))
 spell_info = []
-translations = map.get_info()
+translations = d_map.get_info()
 enum = ["projectile","static_projectile","modifier","draw_many","material","other","utility","passive"]
-for spell in types.get_info():
+for spell in d_types.get_info():
   #print(spell[0][1:])
   try:
     spell_info.append((

@@ -36,7 +36,7 @@ for k,v in pairs(translations) do
 end
 content = content.."}"
 
-file = io.open("map.py","w")
+file = io.open("d_map.py","w")
 io.output(file)
 io.write(content)
 io.close(file)
@@ -50,7 +50,7 @@ for k,v in ipairs(actions) do
 end
 content = content.."]"
 
-file = io.open("types.py","w")
+file = io.open("d_types.py","w")
 io.output(file)
 io.write(content)
 io.close(file)
