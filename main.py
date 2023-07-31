@@ -112,8 +112,9 @@ while running:
                     spell = list(filter(lambda spell: textinput.value.lower(
                     ) in spell[0].lower(), spell_info))[(pos[1]-2)*26+pos[0]]
                     # print(spell[3])
-                    spells.insert(sel, spell[3])
-                    sel += 1
+                    if len(spells) < 26:
+                        spells.insert(sel, spell[3])
+                        sel += 1
                 elif pos[1] == 0:
                     try:
                         spells.pop(pos[0])
@@ -123,7 +124,7 @@ while running:
                         pass
             elif event.button == 5:
                 sel += 1
-                sel = min(26, sel)
+                sel = min(len(spells), sel)
             elif event.button == 4:
                 sel -= 1
                 sel = max(0, sel)
