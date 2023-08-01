@@ -108,10 +108,10 @@ def render():
 
 # Game loop
 running = True
-pygame.key.set_repeat(150, 50)  # press every 50 ms after waiting 200 ms
 while running:
     clock.tick(FPS)
     events = pygame.event.get()
+    dont_input = False
 
     for event in events:
         # listening for the the X button at the top
@@ -146,8 +146,45 @@ while running:
                 sel -= 1
                 sel = max(0, sel)
             # print(pos)
+        if event.type == pygame.KEYDOWN:
+            print(event)
+            if event.unicode == "`":
+                dont_input = True
+                textinput.value = ""
+            try:
+                v = int(event.unicode)
+                dont_input = True
+                if v == 0:
+                    v = 10
+                v -= 1
+                try:
+                    spell = list(filter(lambda spell: textinput.value.lower(
+                    ) in spell[0].lower(), spell_info))[v]
+                    # print(spell[3])
+                    if len(spells) < 26:
+                        spells.insert(sel, spell[3])
+                        sel += 1
+                except IndexError:
+                    pass
+            except ValueError:
+                pass
+            if event.mod == 64:
+                sel -= 1
+                sel = max(0, sel)
+            elif event.mod == 1:
+                sel += 1
+                sel = min(len(spells), sel)
+            if event.unicode == "\r":
+                try:
+                    spells.pop(sel-1)
+                    sel -= 1
+                except IndexError:
+                    pass
 
-    textinput.update(events)
+    if not dont_input:
+        textinput.update(events)
+    else:
+        textinput.update([])
 
     # 3 Draw/render
     screen.fill(BLACK)
