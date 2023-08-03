@@ -21,6 +21,8 @@ BLUE = (0, 0, 255)
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Wand Editor")
+pygame.display.set_icon(pygame.transform.scale(pygame.image.load(
+    "ui/icon_gun_shuffle.png").convert_alpha(), (7*8, 7*8)))
 clock = pygame.time.Clock()  # For syncing the FPS
 
 textinput = pygame_textinput.TextInputVisualizer(font_color=pygame.Color(
