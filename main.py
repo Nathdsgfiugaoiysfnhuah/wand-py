@@ -182,6 +182,8 @@ while running:
                     sel -= 1
                 except IndexError:
                     pass
+            #if event.keycode == 1073741882:
+            #    pass # screenshots?
 
     if not dont_input:
         textinput.update(events)
