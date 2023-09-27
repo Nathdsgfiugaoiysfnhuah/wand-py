@@ -6,6 +6,16 @@ import d_types
 import d_map
 import time
 
+from io import BytesIO
+import win32clipboard
+from PIL import Image
+
+def send_to_clipboard(clip_type, data):
+    win32clipboard.OpenClipboard()
+    win32clipboard.EmptyClipboard()
+    win32clipboard.SetClipboardData(clip_type, data)
+    win32clipboard.CloseClipboard()
+
 WIDTH = 42*26 + 2
 HEIGHT = 1080//2
 FPS = 240
@@ -182,8 +192,19 @@ while running:
                     sel -= 1
                 except IndexError:
                     pass
-            #if event.keycode == 1073741882:
-            #    pass # screenshots?
+            if event.key == 1073742053:
+                if len(spells) == 0:
+                    continue
+                rect = pygame.Rect(2, 2, 42*len(spells), 40)
+                scr = pygame.Surface((42*len(spells), 42))
+                scr.blit(screen, area=rect,dest=(0,0))
+                pygame.image.save(scr, "temp.png")
+                output = BytesIO()
+                img = Image.open("temp.png").convert("RGB").save(output, "BMP")
+                data = output.getvalue()[14:]
+                output.close()
+                send_to_clipboard(win32clipboard.CF_DIB, data)
+                
 
     if not dont_input:
         textinput.update(events)
