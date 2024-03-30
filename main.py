@@ -7,14 +7,16 @@ import d_map
 import time
 
 from io import BytesIO
-import win32clipboard
+#import win32clipboard
 from PIL import Image
+import subprocess
 
-def send_to_clipboard(clip_type, data):
-    win32clipboard.OpenClipboard()
-    win32clipboard.EmptyClipboard()
-    win32clipboard.SetClipboardData(clip_type, data)
-    win32clipboard.CloseClipboard()
+def send_to_clipboard():
+    subprocess.run(" ".join(["cat","temp.png","|","xclip","-selection","clipboard","-target","image/png","-i"]),shell=True)
+    #win32clipboard.OpenClipboard()
+    #win32clipboard.EmptyClipboard()
+    #win32clipboard.SetClipboardData(clip_type, data)
+    #win32clipboard.CloseClipboard()
 
 WIDTH = 42*26 + 2
 HEIGHT = 1080//2
@@ -199,11 +201,7 @@ while running:
                 scr = pygame.Surface((42*len(spells), 42))
                 scr.blit(screen, area=rect,dest=(0,0))
                 pygame.image.save(scr, "temp.png")
-                output = BytesIO()
-                img = Image.open("temp.png").convert("RGB").save(output, "BMP")
-                data = output.getvalue()[14:]
-                output.close()
-                send_to_clipboard(win32clipboard.CF_DIB, data)
+                send_to_clipboard()
                 
 
     if not dont_input:
