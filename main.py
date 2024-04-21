@@ -255,7 +255,7 @@ while running:
 			if event.key == 1073742052:
 				print(spells)
 				ps = subprocess.Popen(
-					["lua", "/home/nathan/Documents/code/wand_eval_tree/main.lua"]
+					["lua", "/home/nathan/Documents/code/wand_eval_tree/main.lua", "-c", "-a"]
 					+ [x for x in spells],
 					cwd="/home/nathan/Documents/code/wand_eval_tree/",
 					stdout=subprocess.PIPE,
