@@ -51,7 +51,7 @@ pygame.display.set_icon(
 		pygame.image.load("ui/icon_gun_shuffle.png").convert_alpha(), (7 * 8, 7 * 8)
 	)
 )
-clock = pygame.time.Clock()	 # For syncing the FPS
+clock = pygame.time.Clock()  # For syncing the FPS
 
 textinput = pygame_textinput.TextInputVisualizer(
 	font_color=pygame.Color((255, 255, 255)),
@@ -207,7 +207,6 @@ while running:
 				sel = max(0, sel)
 			# print(pos)
 		if event.type == pygame.KEYDOWN:
-			print(event)
 			if event.unicode == "`":
 				dont_input = True
 				textinput.value = ""
@@ -255,7 +254,15 @@ while running:
 			if event.key == 1073742052:
 				print(spells)
 				ps = subprocess.Popen(
-					["lua", "/home/nathan/Documents/code/wand_eval_tree/main.lua", "-c", "-a"]
+					[
+						"lua",
+						"/home/nathan/Documents/code/wand_eval_tree/main.lua",
+						"-d",
+						"-a",
+						"-sc",
+						"26",
+						"-sp",
+					]
 					+ [x for x in spells],
 					cwd="/home/nathan/Documents/code/wand_eval_tree/",
 					stdout=subprocess.PIPE,
