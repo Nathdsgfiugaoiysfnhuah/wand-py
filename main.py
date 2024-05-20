@@ -257,8 +257,7 @@ while running:
 					[
 						"luajit",
 						"/home/nathan/Documents/code/wand_eval_tree/main.lua",
-						"-d",
-						"-a",
+						"-da",
 						"-sc",
 						"26",
 						"-sp",
@@ -269,6 +268,14 @@ while running:
 				)
 				subprocess.Popen(["xclip", "-selection", "clipboard"], stdin=ps.stdout)
 				ps.wait()
+			if event.unicode == "\\":
+				ps = subprocess.Popen(
+					["echo", "luajit -da -sc 26 -sp " + " ".join(spells)],
+					stdout=subprocess.PIPE,
+				)
+				subprocess.Popen(["xclip", "-selection", "clipboard"], stdin=ps.stdout)
+				ps.wait()
+				dont_input = True
 			if event.key == 27:
 				exit()
 
