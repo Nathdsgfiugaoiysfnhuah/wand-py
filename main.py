@@ -255,7 +255,7 @@ while running:
 				print(spells)
 				ps = subprocess.Popen(
 					[
-						"lua",
+						"luajit",
 						"/home/nathan/Documents/code/wand_eval_tree/main.lua",
 						"-d",
 						"-a",
