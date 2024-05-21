@@ -270,7 +270,7 @@ while running:
 				ps.wait()
 			if event.unicode == "\\":
 				ps = subprocess.Popen(
-					["echo", "luajit -da -sc 26 -sp " + " ".join(spells)],
+					["echo", "luajit main.lua -da -sc 26 -sp " + " ".join(spells)],
 					stdout=subprocess.PIPE,
 				)
 				subprocess.Popen(["xclip", "-selection", "clipboard"], stdin=ps.stdout)
