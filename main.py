@@ -258,6 +258,8 @@ while running:
 						"luajit",
 						"/home/nathan/Documents/code/wand_eval_tree/main.lua",
 						"-da",
+						"-ln",
+						"en",
 						"-sc",
 						"26",
 						"-sp",
