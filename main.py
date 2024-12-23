@@ -1,11 +1,25 @@
 import subprocess
 from re import sub
+import sys
 
 import pygame
 import pygame_textinput
 
 import d_map
 import d_types
+
+load_wand = False
+if len(sys.argv) > 1:
+    wand_counter = int(sys.argv[1])
+    load_wand = True
+else:
+    open("wand_counter", "a+").close()
+    wand_counter = open("wand_counter", "r+").read()
+    if wand_counter == "":
+        wand_counter = 0
+    else:
+        wand_counter = int(wand_counter)
+    open("wand_counter", "w").write(str(wand_counter))
 
 
 def send_to_clipboard():
@@ -124,6 +138,9 @@ def tick():
 
 
 spells = []
+if load_wand:
+    spells = [x[1:-1] for x in open("wands/" + str(wand_counter), "r").read()[1:-1].split(", ")]
+    print(spells)
 sel = 0
 
 
@@ -217,6 +234,10 @@ while running:
                     v = 10
                 v -= 1
                 try:
+                    open("wands/" + str(wand_counter), "w+").write(str(spells))
+                    open("wand_counter", "w").write(str(wand_counter))
+                    wand_counter += 1
+                    wand_counter %= 256
                     spell = list(
                         filter(
                             lambda spell: textinput.value.lower() in spell[0].lower(),
