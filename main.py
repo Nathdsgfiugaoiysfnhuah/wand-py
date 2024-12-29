@@ -11,7 +11,7 @@ import d_types
 load_wand = False
 if len(sys.argv) > 1:
     if sys.argv[1] == "-":
-        wand_counter = open("wand_counter", "r").read()
+        wand_counter = int(open("wand_counter", "r").read())
     else:
         wand_counter = int(sys.argv[1])
     load_wand = True
